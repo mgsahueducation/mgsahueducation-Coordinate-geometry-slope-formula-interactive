@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MG SAHU EDUCATION BLOG | Line Equation & Slope Explorer</title>
+
+<meta name="description"
+content="MG SAHU EDUCATION BLOG – Interactive Line Equation, Slope Formula Explorer and Class 10 Mathematics Quiz.">
+
+<meta name="author" content="MG SAHU EDUCATION BLOG">
+
+<style>
+
+:root{
+    --bg:#07111f;
+    --card:#0f1b2d;
+    --card2:#131f33;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#26364d;
+    --blue:#2563eb;
+    --cyan:#38bdf8;
+    --green:#34d399;
+    --red:#f43f5e;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    background:linear-gradient(180deg,#06101d,#0b1322);
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    line-height:1.5;
+}
+
+header{
+    background:linear-gradient(135deg,#123c69,#2563eb);
+    text-align:center;
+    padding:22px 15px 25px;
+    box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+
+.brand{
+    font-size:1.35rem;
+    font-weight:800;
+    margin-bottom:4px;
+}
+
+.tagline{
+    font-size:.85rem;
+    opacity:.9;
+}
+
+.contact{
+    margin-top:9px;
+    font-size:.95rem;
+    font-weight:700;
+}
+
+header h1{
+    margin:18px 0 5px;
+    font-size:1.65rem;
+}
+
+header p{
+    margin:0;
+    font-size:.9rem;
+    opacity:.9;
+}
+
+.container{
+    width:min(1100px,94%);
+    margin:18px auto;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:18px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:16px;
+    box-shadow:0 8px 25px rgba(0,0,0,.18);
+}
+
+.card h2{
+    margin-top:0;
+    font-size:1.15rem;
+}
+
+.graph-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    overflow:hidden;
+}
+
+canvas{
+    display:block;
+    width:min(100%,440px);
+    height:auto;
+    max-width:440px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:#08111f;
+    touch-action:none;
+}
+
+.values{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:14px;
+}
+
+.value{
+    background:var(--card2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px;
+}
+
+.value small{
+    display:block;
+    color:var(--muted);
+    font-size:.75rem;
+    margin-bottom:3px;
+}
+
+.value strong{
+    font-size:.9rem;
+    word-break:break-word;
+}
+
+.formulas{
+    display:grid;
+    gap:10px;
+}
+
+.formula{
+    background:var(--card2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.formula:hover,
+.formula.active{
+    border-color:var(--cyan);
+    background:rgba(56,189,248,.09);
+}
+
+.formula-title{
+    color:var(--cyan);
+    font-weight:700;
+    font-size:.85rem;
+    margin-bottom:4px;
+}
+
+.formula-code{
+    font-family:monospace;
+    font-size:.95rem;
+}
+
+.hint{
+    color:var(--muted);
+    font-size:.8rem;
+    margin-top:10px;
+}
+
+/* QUIZ */
+
+.quiz-section{
+    width:min(1100px,94%);
+    margin:20px auto;
+    background:#0b1120;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.18);
+}
+
+.quiz-section h2{
+    margin:0 0 4px;
+    font-size:1.35rem;
+}
+
+.quiz-note{
+    color:var(--muted);
+    font-size:.85rem;
+    margin-bottom:15px;
+}
+
+.quiz-question{
+    background:#131d31;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    margin:12px 0;
+}
+
+.quiz-question h3{
+    font-size:1rem;
+    line-height:1.45;
+    margin:0 0 10px;
+}
+
+.quiz-option{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:#1e293b;
+    color:var(--text);
+    border:1px solid #475569;
+    border-radius:9px;
+    padding:12px;
+    margin:7px 0;
+    cursor:pointer;
+    font-size:.92rem;
+    transition:.2s;
+}
+
+.quiz-option:hover{
+    border-color:var(--cyan);
+}
+
+.quiz-option.selected{
+    border-color:var(--cyan);
+    background:rgba(56,189,248,.14);
+}
+
+.quiz-option.correct{
+    border-color:var(--green);
+    background:rgba(52,211,153,.14);
+}
+
+.quiz-option.wrong{
+    border-color:var(--red);
+    background:rgba(244,63,94,.14);
+}
+
+.quiz-feedback{
+    color:var(--muted);
+    font-size:.82rem;
+    margin-top:7px;
+}
+
+.quiz-controls{
+    margin-top:16px;
+}
+
+.quiz-btn{
+    border:0;
+    border-radius:9px;
+    padding:12px 17px;
+    font-weight:700;
+    cursor:pointer;
+    margin:4px 5px 4px 0;
+    font-size:.9rem;
+}
+
+.quiz-submit{
+    background:#2563eb;
+    color:white;
+}
+
+.quiz-restart{
+    background:#475569;
+    color:white;
+}
+
+.quiz-result{
+    display:none;
+    margin-top:12px;
+    padding:13px;
+    border-radius:9px;
+    background:#131d31;
+    border:1px solid var(--border);
+    font-weight:700;
+}
+
+footer{
+    text-align:center;
+    color:var(--muted);
+    padding:25px 15px 35px;
+    font-size:.8rem;
+}
+
+@media(min-width:768px){
+
+    .container{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .full{
+        grid-column:1/-1;
+    }
+
+    header h1{
+        font-size:2rem;
+    }
+}
+
+@media(max-width:600px){
+
+    header{
+        padding:18px 12px 22px;
+    }
+
+    .brand{
+        font-size:1.15rem;
+    }
+
+    header h1{
+        font-size:1.35rem;
+        margin-top:15px;
+    }
+
+    .container,
+    .quiz-section{
+        width:94%;
+    }
+
+    .card{
+        padding:13px;
+    }
+
+    .values{
+        grid-template-columns:1fr;
+    }
+
+    .quiz-question{
+        padding:12px;
+    }
+
+    .quiz-option{
+        padding:13px 11px;
+        min-height:46px;
+    }
+
+    .quiz-btn{
+        width:100%;
+        margin:5px 0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="brand">📚 MG SAHU EDUCATION BLOG</div>
+
+    <div class="tagline">
+        Learn • Practice • Solve • Succeed
+    </div>
+
+    <div class="contact">
+        📞 8150968743
+    </div>
+
+    <h1>
+        📐 Line Equation &amp; Slope Explorer
+    </h1>
+
+    <p>
+        Drag points A and B to explore slope and line equations.
+    </p>
+
+</header>
+
+
+<div class="container">
+
+    <!-- GRAPH -->
+
+    <section class="card">
+
+        <h2>🖱️ Interactive Graph</h2>
+
+        <div class="graph-wrap">
+
+            <canvas id="gridCanvas"
+                    width="440"
+                    height="440">
+            </canvas>
+
+        </div>
+
+        <div class="hint">
+            Touch and drag point A or B on the graph.
+        </div>
+
+    </section>
+
+
+    <!-- VALUES -->
+
+    <section class="card">
+
+        <h2>📊 Calculated Values</h2>
+
+        <div class="values">
+
+            <div class="value">
+                <small>Point A</small>
+                <strong id="pointA">(-4, -2)</strong>
+            </div>
+
+            <div class="value">
+                <small>Point B</small>
+                <strong id="pointB">(4, 4)</strong>
+            </div>
+
+            <div class="value">
+                <small>Slope (m)</small>
+                <strong id="slopeValue">3/4</strong>
+            </div>
+
+            <div class="value">
+                <small>Y-Intercept</small>
+                <strong id="interceptValue">1</strong>
+            </div>
+
+            <div class="value full">
+                <small>Slope-Intercept Form</small>
+                <strong id="slopeForm">y = 3/4x + 1</strong>
+            </div>
+
+            <div class="value full">
+                <small>Standard Form</small>
+                <strong id="standardForm">3x - 4y = -4</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FORMULAS -->
+
+    <section class="card full">
+
+        <h2>📚 Formula Cards</h2>
+
+        <div class="formulas">
+
+            <div class="formula" data-formula="slope">
+
+                <div class="formula-title">
+                    Slope Formula
+                </div>
+
+                <div class="formula-code">
+                    m = (y₂ − y₁) / (x₂ − x₁)
+                </div>
+
+            </div>
+
+
+            <div class="formula" data-formula="intercept">
+
+                <div class="formula-title">
+                    Y-Intercept
+                </div>
+
+                <div class="formula-code">
+                    b = y − mx
+                </div>
+
+            </div>
+
+
+            <div class="formula" data-formula="slope-intercept">
+
+                <div class="formula-title">
+                    Slope-Intercept Form
+                </div>
+
+                <div class="formula-code">
+                    y = mx + b
+                </div>
+
+            </div>
+
+
+            <div class="formula" data-formula="standard">
+
+                <div class="formula-title">
+                    Standard Form
+                </div>
+
+                <div class="formula-code">
+                    Ax + By = C
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="hint">
+            Tap a formula card to highlight it.
+        </div>
+
+    </section>
+
+</div>
+<!-- =========================
+     20 QUESTION QUIZ
+========================= -->
+
+<section class="quiz-section" id="quiz">
+
+    <h2>📝 20-Question Slope &amp; Line Equation Quiz</h2>
+
+    <div class="quiz-note">
+        Choose one answer for each question, then tap
+        <strong>Submit Quiz</strong>.
+        Each question carries 1 mark.
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>1. What is the slope of the line passing through (2, 3) and (6, 11)?</h3>
+        <button class="quiz-option" data-q="0" data-a="A">A. 1</button>
+        <button class="quiz-option" data-q="0" data-a="B">B. 2</button>
+        <button class="quiz-option" data-q="0" data-a="C">C. 3</button>
+        <button class="quiz-option" data-q="0" data-a="D">D. 4</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>2. What is the slope of a horizontal line?</h3>
+        <button class="quiz-option" data-q="1" data-a="A">A. 0</button>
+        <button class="quiz-option" data-q="1" data-a="B">B. 1</button>
+        <button class="quiz-option" data-q="1" data-a="C">C. Undefined</button>
+        <button class="quiz-option" data-q="1" data-a="D">D. −1</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>3. What is the slope of a vertical line?</h3>
+        <button class="quiz-option" data-q="2" data-a="A">A. 0</button>
+        <button class="quiz-option" data-q="2" data-a="B">B. 1</button>
+        <button class="quiz-option" data-q="2" data-a="C">C. Undefined</button>
+        <button class="quiz-option" data-q="2" data-a="D">D. −1</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>4. Find the slope of the line through (−2, 5) and (3, 0).</h3>
+        <button class="quiz-option" data-q="3" data-a="A">A. −1</button>
+        <button class="quiz-option" data-q="3" data-a="B">B. 1</button>
+        <button class="quiz-option" data-q="3" data-a="C">C. 5</button>
+        <button class="quiz-option" data-q="3" data-a="D">D. −5</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>5. In y = 2x + 5, what is the y-intercept?</h3>
+        <button class="quiz-option" data-q="4" data-a="A">A. 5</button>
+        <button class="quiz-option" data-q="4" data-a="B">B. 2</button>
+        <button class="quiz-option" data-q="4" data-a="C">C. −5</button>
+        <button class="quiz-option" data-q="4" data-a="D">D. −2</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>6. Which equation has slope 3 and y-intercept −2?</h3>
+        <button class="quiz-option" data-q="5" data-a="A">A. y = 2x + 3</button>
+        <button class="quiz-option" data-q="5" data-a="B">B. y = −3x − 2</button>
+        <button class="quiz-option" data-q="5" data-a="C">C. y = 3x − 2</button>
+        <button class="quiz-option" data-q="5" data-a="D">D. y = 3x + 2</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>7. What is the y-intercept of y = −4x + 7?</h3>
+        <button class="quiz-option" data-q="6" data-a="A">A. −4</button>
+        <button class="quiz-option" data-q="6" data-a="B">B. −7</button>
+        <button class="quiz-option" data-q="6" data-a="C">C. 7</button>
+        <button class="quiz-option" data-q="6" data-a="D">D. 4</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>8. Which point lies on y = 2x + 1?</h3>
+        <button class="quiz-option" data-q="7" data-a="A">A. (1, 2)</button>
+        <button class="quiz-option" data-q="7" data-a="B">B. (1, 3)</button>
+        <button class="quiz-option" data-q="7" data-a="C">C. (2, 4)</button>
+        <button class="quiz-option" data-q="7" data-a="D">D. (0, 2)</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>9. What is the slope of y = −5x + 4?</h3>
+        <button class="quiz-option" data-q="8" data-a="A">A. 4</button>
+        <button class="quiz-option" data-q="8" data-a="B">B. −5</button>
+        <button class="quiz-option" data-q="8" data-a="C">C. 5</button>
+        <button class="quiz-option" data-q="8" data-a="D">D. −4</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>10. What is the slope between (1, 2) and (5, 14)?</h3>
+        <button class="quiz-option" data-q="9" data-a="A">A. 2</button>
+        <button class="quiz-option" data-q="9" data-a="B">B. 4</button>
+        <button class="quiz-option" data-q="9" data-a="C">C. 3</button>
+        <button class="quiz-option" data-q="9" data-a="D">D. 6</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>11. Which equation represents a vertical line through x = 4?</h3>
+        <button class="quiz-option" data-q="10" data-a="A">A. y = 4</button>
+        <button class="quiz-option" data-q="10" data-a="B">B. y = x + 4</button>
+        <button class="quiz-option" data-q="10" data-a="C">C. y = −4</button>
+        <button class="quiz-option" data-q="10" data-a="D">D. x = 4</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>12. If the slope is 2 and the run is 5, what is the rise?</h3>
+        <button class="quiz-option" data-q="11" data-a="A">A. 2</button>
+        <button class="quiz-option" data-q="11" data-a="B">B. 10</button>
+        <button class="quiz-option" data-q="11" data-a="C">C. 5</button>
+        <button class="quiz-option" data-q="11" data-a="D">D. 7</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>13. Which line is parallel to y = 4x + 2?</h3>
+        <button class="quiz-option" data-q="12" data-a="A">A. y = 4x − 7</button>
+        <button class="quiz-option" data-q="12" data-a="B">B. y = −4x + 2</button>
+        <button class="quiz-option" data-q="12" data-a="C">C. y = 1/4x + 2</button>
+        <button class="quiz-option" data-q="12" data-a="D">D. y = −1/4x + 2</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>14. What is the slope of a line perpendicular to a line with slope 2?</h3>
+        <button class="quiz-option" data-q="13" data-a="A">A. 2</button>
+        <button class="quiz-option" data-q="13" data-a="B">B. −1/2</button>
+        <button class="quiz-option" data-q="13" data-a="C">C. −2</button>
+        <button class="quiz-option" data-q="13" data-a="D">D. 1/2</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>15. Which equation has slope 2 and passes through (1, 5)?</h3>
+        <button class="quiz-option" data-q="14" data-a="A">A. y = 2x + 3</button>
+        <button class="quiz-option" data-q="14" data-a="B">B. y = 2x + 5</button>
+        <button class="quiz-option" data-q="14" data-a="C">C. y = 3x + 2</button>
+        <button class="quiz-option" data-q="14" data-a="D">D. y = x + 4</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>16. Find the y-intercept of the line through (2, 5) and (4, 9).</h3>
+        <button class="quiz-option" data-q="15" data-a="A">A. 1</button>
+        <button class="quiz-option" data-q="15" data-a="B">B. 2</button>
+        <button class="quiz-option" data-q="15" data-a="C">C. 3</button>
+        <button class="quiz-option" data-q="15" data-a="D">D. 4</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>17. What is the slope of 2x + y = 6?</h3>
+        <button class="quiz-option" data-q="16" data-a="A">A. 2</button>
+        <button class="quiz-option" data-q="16" data-a="B">B. −2</button>
+        <button class="quiz-option" data-q="16" data-a="C">C. 6</button>
+        <button class="quiz-option" data-q="16" data-a="D">D. −6</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>18. Which equation represents a horizontal line passing through y = 5?</h3>
+        <button class="quiz-option" data-q="17" data-a="A">A. x = 5</button>
+        <button class="quiz-option" data-q="17" data-a="B">B. y = 5</button>
+        <button class="quiz-option" data-q="17" data-a="C">C. y = x + 5</button>
+        <button class="quiz-option" data-q="17" data-a="D">D. x + y = 5</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>19. What is the horizontal distance between (2, 4) and (9, 4)?</h3>
+        <button class="quiz-option" data-q="18" data-a="A">A. 5</button>
+        <button class="quiz-option" data-q="18" data-a="B">B. 6</button>
+        <button class="quiz-option" data-q="18" data-a="C">C. 7</button>
+        <button class="quiz-option" data-q="18" data-a="D">D. 8</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-question">
+        <h3>20. Two distinct non-vertical lines have the same slope. What is their relationship?</h3>
+        <button class="quiz-option" data-q="19" data-a="A">A. Perpendicular</button>
+        <button class="quiz-option" data-q="19" data-a="B">B. Parallel</button>
+        <button class="quiz-option" data-q="19" data-a="C">C. Intersecting at 90°</button>
+        <button class="quiz-option" data-q="19" data-a="D">D. Vertical</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+
+    <div class="quiz-controls">
+
+        <button class="quiz-btn quiz-submit" id="submitQuiz">
+            ✅ Submit Quiz
+        </button>
+
+        <button class="quiz-btn quiz-restart" id="restartQuiz">
+            🔄 Restart Quiz
+        </button>
+
+    </div>
+
+    <div class="quiz-result" id="quizResult"></div>
+
+</section>
+
+
+<footer>
+
+    <div>📚 MG SAHU EDUCATION BLOG</div>
+
+    <div>
+        Learn • Practice • Solve • Succeed
+    </div>
+
+    <div>
+        📞 8150968743
+    </div>
+</footer>
+<script>
+
+/* =========================================
+   INTERACTIVE GRAPH
+========================================= */
+
+const canvas = document.getElementById("gridCanvas");
+const ctx = canvas.getContext("2d");
+
+const W = canvas.width;
+const H = canvas.height;
+
+const minCoord = -10;
+const maxCoord = 10;
+
+let A = {x:-4, y:-2};
+let B = {x:4, y:4};
+
+let dragging = null;
+
+
+/* =========================================
+   COORDINATE CONVERSION
+========================================= */
+
+function coordToCanvas(x, y){
+
+    const px =
+        (x - minCoord) /
+        (maxCoord - minCoord) *
+        W;
+
+    const py =
+        H -
+        (y - minCoord) /
+        (maxCoord - minCoord) *
+        H;
+
+    return {
+        x:px,
+        y:py
+    };
+}
+
+
+function canvasToCoord(px, py){
+
+    const x =
+        minCoord +
+        (px / W) *
+        (maxCoord - minCoord);
+
+    const y =
+        minCoord +
+        ((H - py) / H) *
+        (maxCoord - minCoord);
+
+    return {
+        x:Math.round(x),
+        y:Math.round(y)
+    };
+}
+
+
+/* =========================================
+   DRAW GRID
+========================================= */
+
+function drawGrid(){
+
+    ctx.clearRect(0,0,W,H);
+
+    /* Background */
+
+    ctx.fillStyle = "#08111f";
+    ctx.fillRect(0,0,W,H);
+
+
+    /* Grid */
+
+    for(let i=minCoord; i<=maxCoord; i++){
+
+        const p1 =
+            coordToCanvas(i,minCoord);
+
+        const p2 =
+            coordToCanvas(i,maxCoord);
+
+        ctx.beginPath();
+
+        ctx.moveTo(p1.x,p1.y);
+
+        ctx.lineTo(p2.x,p2.y);
+
+        ctx.strokeStyle =
+            i===0 ? "#64748b" : "#1e293b";
+
+        ctx.lineWidth =
+            i===0 ? 2 : 1;
+
+        ctx.stroke();
+
+
+        const q1 =
+            coordToCanvas(minCoord,i);
+
+        const q2 =
+            coordToCanvas(maxCoord,i);
+
+        ctx.beginPath();
+
+        ctx.moveTo(q1.x,q1.y);
+
+        ctx.lineTo(q2.x,q2.y);
+
+        ctx.strokeStyle =
+            i===0 ? "#64748b" : "#1e293b";
+
+        ctx.lineWidth =
+            i===0 ? 2 : 1;
+
+        ctx.stroke();
+
+
+        /* Axis numbers */
+
+        if(i !== 0){
+
+            ctx.fillStyle = "#94a3b8";
+
+            ctx.font = "10px Arial";
+
+            const xp =
+                coordToCanvas(i,0);
+
+            ctx.fillText(
+                i,
+                xp.x + 2,
+                xp.y - 4
+            );
+
+
+            const yp =
+                coordToCanvas(0,i);
+
+            ctx.fillText(
+                i,
+                yp.x + 4,
+                yp.y - 2
+            );
+        }
+    }
+
+
+    /* =====================================
+       DRAW LINE
+    ===================================== */
+
+    const dx = B.x - A.x;
+    const dy = B.y - A.y;
+
+
+    if(dx !== 0){
+
+        const m = dy / dx;
+
+        const yLeft =
+            A.y + m * (minCoord - A.x);
+
+        const yRight =
+            A.y + m * (maxCoord - A.x);
+
+        const pLeft =
+            coordToCanvas(minCoord,yLeft);
+
+        const pRight =
+            coordToCanvas(maxCoord,yRight);
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            pLeft.x,
+            pLeft.y
+        );
+
+        ctx.lineTo(
+            pRight.x,
+            pRight.y
+        );
+
+        ctx.strokeStyle = "#38bdf8";
+
+        ctx.lineWidth = 3;
+
+        ctx.stroke();
+
+    }else{
+
+        /* Vertical line */
+
+        const pTop =
+            coordToCanvas(A.x,maxCoord);
+
+        const pBottom =
+            coordToCanvas(A.x,minCoord);
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            pTop.x,
+            pTop.y
+        );
+
+        ctx.lineTo(
+            pBottom.x,
+            pBottom.y
+        );
+
+        ctx.strokeStyle = "#38bdf8";
+
+        ctx.lineWidth = 3;
+
+        ctx.stroke();
+    }
+
+
+    /* =====================================
+       DRAW POINT A
+    ===================================== */
+
+    drawPoint(
+        A,
+        "#34d399",
+        "A"
+    );
+
+
+    /* =====================================
+       DRAW POINT B
+    ===================================== */
+
+    drawPoint(
+        B,
+        "#f43f5e",
+        "B"
+    );
+}
+
+
+/* =========================================
+   DRAW POINT
+========================================= */
+
+function drawPoint(point, color, label){
+
+    const p =
+        coordToCanvas(
+            point.x,
+            point.y
+        );
+
+    ctx.beginPath();
+
+    ctx.arc(
+        p.x,
+        p.y,
+        8,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fillStyle = color;
+
+    ctx.fill();
+
+    ctx.strokeStyle = "#ffffff";
+
+    ctx.lineWidth = 2;
+
+    ctx.stroke();
+
+
+    ctx.fillStyle = "#ffffff";
+
+    ctx.font = "bold 12px Arial";
+
+    ctx.fillText(
+        label,
+        p.x + 10,
+        p.y - 10
+    );
+}
+
+
+/* =========================================
+   FORMAT NUMBER
+========================================= */
+
+function formatNumber(value){
+
+    if(
+        Number.isInteger(value)
+    ){
+        return String(value);
+    }
+
+    return Number(value.toFixed(3))
+        .toString();
+}
+
+
+/* =========================================
+   FRACTION
+========================================= */
+
+function fraction(numerator, denominator){
+
+    if(denominator === 0){
+        return "undefined";
+    }
+
+    if(numerator === 0){
+        return "0";
+    }
+
+    let sign = "";
+
+    if(
+        numerator < 0 &&
+        denominator > 0
+    ){
+        sign = "-";
+        numerator = Math.abs(numerator);
+    }
+
+    if(
+        denominator < 0
+    ){
+        sign =
+            sign === "-" ? "" : "-";
+
+        numerator = Math.abs(numerator);
+
+        denominator = Math.abs(denominator);
+    }
+
+
+    function gcd(a,b){
+
+        a = Math.abs(a);
+        b = Math.abs(b);
+
+        while(b !== 0){
+
+            const temp = b;
+
+            b = a % b;
+
+            a = temp;
+        }
+
+        return a;
+    }
+
+
+    const g =
+        gcd(numerator,denominator);
+
+    numerator /= g;
+    denominator /= g;
+
+
+    if(denominator === 1){
+
+        return sign +
+            numerator;
+    }
+
+    return sign +
+        numerator +
+        "/" +
+        denominator;
+}
+
+
+/* =========================================
+   UPDATE VALUES
+========================================= */
+
+function updateValues(){
+
+    document.getElementById("pointA").textContent =
+        `(${A.x}, ${A.y})`;
+
+    document.getElementById("pointB").textContent =
+        `(${B.x}, ${B.y})`;
+
+
+    const dx = B.x - A.x;
+    const dy = B.y - A.y;
+
+
+    /* =====================================
+       VERTICAL LINE
+    ===================================== */
+
+    if(dx === 0){
+
+        document.getElementById("slopeValue")
+            .textContent =
+            "Undefined";
+
+        document.getElementById("interceptValue")
+            .textContent =
+            "None";
+
+        document.getElementById("slopeForm")
+            .textContent =
+            `x = ${A.x}`;
+
+        document.getElementById("standardForm")
+            .textContent =
+            `1x + 0y = ${A.x}`;
+
+        return;
+    }
+
+
+    /* =====================================
+       NORMAL LINE
+    ===================================== */
+
+    const slope =
+        dy / dx;
+
+    const intercept =
+        A.y - slope * A.x;
+
+
+    const slopeText =
+        fraction(dy,dx);
+
+
+    document.getElementById("slopeValue")
+        .textContent =
+        slopeText;
+
+
+    document.getElementById("interceptValue")
+        .textContent =
+        formatNumber(intercept);
+
+
+    let slopeForm = "y = ";
+
+
+    if(slope === 0){
+
+        slopeForm +=
+            formatNumber(intercept);
+
+    }else{
+
+        if(slope === 1){
+
+            slopeForm += "x";
+
+        }else if(slope === -1){
+
+            slopeForm += "-x";
+
+        }else{
+
+            slopeForm +=
+                slopeText + "x";
+        }
+
+
+        if(intercept > 0){
+
+            slopeForm +=
+                " + " +
+                formatNumber(intercept);
+
+        }else if(intercept < 0){
+
+            slopeForm +=
+                " - " +
+                formatNumber(
+                    Math.abs(intercept)
+                );
+        }
+    }
+
+
+    document.getElementById("slopeForm")
+        .textContent =
+        slopeForm;
+
+
+    /* =====================================
+       STANDARD FORM
+    ===================================== */
+
+    let standardA = dy;
+    let standardB = -dx;
+    let standardC =
+        standardA * A.x +
+        standardB * A.y;
+
+
+    /* Simplify coefficients */
+
+    function gcd3(a,b,c){
+
+        function gcd(x,y){
+
+            x = Math.abs(x);
+            y = Math.abs(y);
+
+            while(y !== 0){
+
+                const t = y;
+
+                y = x % y;
+
+                x = t;
+            }
+
+            return x;
+        }
+
+        return gcd(
+            gcd(a,b),
+            c
+        );
+    }
+
+
+    const g =
+        gcd3(
+            standardA,
+            standardB,
+            standardC
+        );
+
+
+    if(g !== 0){
+
+        standardA /= g;
+        standardB /= g;
+        standardC /= g;
+    }
+
+
+    /* Make first non-zero coefficient positive */
+
+    if(
+        standardA < 0 ||
+        (
+            standardA === 0 &&
+            standardB < 0
+        )
+    ){
+
+        standardA *= -1;
+        standardB *= -1;
+        standardC *= -1;
+    }
+
+
+    function standardTerm(
+        coefficient,
+        variable,
+        first
+    ){
+
+        if(coefficient === 0){
+            return "";
+        }
+
+
+        const abs =
+            Math.abs(coefficient);
+
+
+        let term = "";
+
+
+        if(
+            coefficient < 0
+        ){
+
+            term +=
+                first ? "-" : " - ";
+
+        }else{
+
+            term +=
+                first ? "" : " + ";
+        }
+
+
+        if(abs !== 1){
+
+            term += abs;
+        }
+
+        term += variable;
+
+        return term;
+    }
+
+
+    let standardForm =
+        standardTerm(
+            standardA,
+            "x",
+            true
+        );
+
+
+    standardForm +=
+        standardTerm(
+            standardB,
+            "y",
+            false
+        );
+
+
+    standardForm +=
+        " = " +
+        standardC;
+
+
+    document.getElementById("standardForm")
+        .textContent =
+        standardForm;
+}
+
+
+/* =========================================
+   POINTER POSITION
+========================================= */
+
+function getPointerPosition(event){
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+    const scaleX =
+        canvas.width /
+        rect.width;
+
+    const scaleY =
+        canvas.height /
+        rect.height;
+
+
+    return {
+        x:
+            (event.clientX - rect.left) *
+            scaleX,
+
+        y:
+            (event.clientY - rect.top) *
+            scaleY
+    };
+}
+
+
+/* =========================================
+   POINTER DOWN
+========================================= */
+
+canvas.addEventListener(
+    "pointerdown",
+    function(event){
+
+        const pos =
+            getPointerPosition(event);
+
+
+        const pointA =
+            coordToCanvas(
+                A.x,
+                A.y
+            );
+
+
+        const pointB =
+            coordToCanvas(
+                B.x,
+                B.y
+            );
+
+
+        const distanceA =
+            Math.hypot(
+                pos.x - pointA.x,
+                pos.y - pointA.y
+            );
+
+
+        const distanceB =
+            Math.hypot(
+                pos.x - pointB.x,
+                pos.y - pointB.y
+            );
+
+
+        if(distanceA <= 18){
+
+            dragging = "A";
+
+        }else if(distanceB <= 18){
+
+            dragging = "B";
+        }
+
+
+        if(dragging){
+
+            canvas.setPointerCapture(
+                event.pointerId
+            );
+        }
+    }
+);
+
+
+/* =========================================
+   POINTER MOVE
+========================================= */
+
+canvas.addEventListener(
+    "pointermove",
+    function(event){
+
+        if(!dragging){
+            return;
+        }
+
+
+        const pos =
+            getPointerPosition(event);
+
+
+        const point =
+            canvasToCoord(
+                pos.x,
+                pos.y
+            );
+
+
+        if(dragging === "A"){
+
+            A.x = point.x;
+            A.y = point.y;
+
+        }else{
+
+            B.x = point.x;
+            B.y = point.y;
+        }
+
+
+        drawGrid();
+
+        updateValues();
+    }
+);
+
+
+/* =========================================
+   POINTER UP
+========================================= */
+
+canvas.addEventListener(
+    "pointerup",
+    function(){
+
+        dragging = null;
+    }
+);
+
+
+canvas.addEventListener(
+    "pointercancel",
+    function(){
+
+        dragging = null;
+    }
+);
+
+
+/* =========================================
+   FORMULA CARD
+========================================= */
+
+document
+    .querySelectorAll(".formula")
+    .forEach(function(card){
+
+        card.addEventListener(
+            "click",
+            function(){
+
+                document
+                    .querySelectorAll(".formula")
+                    .forEach(function(item){
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+
+                card.classList.add(
+                    "active"
+                );
+            }
+        );
+
+    });
+
+
+/* =========================================
+   INITIAL GRAPH
+========================================= */
+
+drawGrid();
+
+updateValues();
+
+
+/* =========================================
+   QUIZ
+========================================= */
+
+const correctAnswers = [
+
+    "B",
+    "A",
+    "C",
+    "A",
+    "A",
+    "C",
+    "C",
+    "B",
+    "B",
+    "C",
+    "D",
+    "B",
+    "A",
+    "B",
+    "A",
+    "A",
+    "B",
+    "B",
+    "C",
+    "B"
+
+];
+
+
+const selectedAnswers =
+    {};
+
+
+/* =========================================
+   SELECT ANSWER
+========================================= */
+
+document
+    .querySelectorAll(".quiz-option")
+    .forEach(function(button){
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                const q =
+                    Number(
+                        button.dataset.q
+                    );
+
+                const answer =
+                    button.dataset.a;
+
+
+                selectedAnswers[q] =
+                    answer;
+
+
+                const question =
+                    button.closest(
+                        ".quiz-question"
+                    );
+
+
+                question
+                    .querySelectorAll(
+                        ".quiz-option"
+                    )
+                    .forEach(function(option){
+
+                        option.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+
+                button.classList.add(
+                    "selected"
+                );
+
+            }
+        );
+
+    });
+
+
+/* =========================================
+   SUBMIT QUIZ
+========================================= */
+
+document
+    .getElementById("submitQuiz")
+    .addEventListener(
+        "click",
+        function(){
+
+            let score = 0;
+
+            let attempted = 0;
+
+
+            document
+                .querySelectorAll(
+                    ".quiz-question"
+                )
+                .forEach(function(question){
+
+                    question
+                        .querySelectorAll(
+                            ".quiz-option"
+                        )
+                        .forEach(function(option){
+
+                            option.classList.remove(
+                                "correct",
+                                "wrong"
+                            );
+
+                        });
+
+                });
+
+
+            correctAnswers.forEach(
+                function(correct,index){
+
+                    const selected =
+                        selectedAnswers[index];
+
+
+                    const question =
+                        document
+                        .querySelectorAll(
+                            ".quiz-question"
+                        )[index];
+
+
+                    const options =
+                        question
+                        .querySelectorAll(
+                            ".quiz-option"
+                        );
+
+
+                    const feedback =
+                        question
+                        .querySelector(
+                            ".quiz-feedback"
+                        );
+
+
+                    if(selected){
+
+                        attempted++;
+                    }
+
+
+                    options.forEach(
+                        function(option){
+
+                            if(
+                                option.dataset.a ===
+                                correct
+                            ){
+
+                                option.classList.add(
+                                    "correct"
+                                );
+                            }
+
+
+                            if(
+                                selected &&
+                                option.dataset.a ===
+                                selected &&
+                                selected !== correct
+                            ){
+
+                                option.classList.add(
+                                    "wrong"
+                                );
+                            }
+
+                        }
+                    );
+
+
+                    if(
+                        selected === correct
+                    ){
+
+                        score++;
+
+                        feedback.textContent =
+                            "✅ Correct!";
+
+                    }else if(selected){
+
+                        feedback.textContent =
+                            "❌ Incorrect. Correct answer: " +
+                            correct;
+
+                    }else{
+
+                        feedback.textContent =
+                            "⚠️ Not answered. Correct answer: " +
+                            correct;
+                    }
+
+                }
+            );
+
+
+            const result =
+                document.getElementById(
+                    "quizResult"
+                );
+
+
+            result.style.display =
+                "block";
+
+
+            result.innerHTML =
+                `🎯 Your Score: ${score} / 20<br>
+                 📝 Attempted: ${attempted} / 20<br>
+                 📚 Correct Answers: ${score}`;
+
+
+            result.scrollIntoView({
+                behavior:"smooth",
+                block:"center"
+            });
+
+        }
+    );
+
+
+/* =========================================
+   RESTART QUIZ
+========================================= */
+
+document
+    .getElementById("restartQuiz")
+    .addEventListener(
+        "click",
+        function(){
+
+            for(
+                const key in selectedAnswers
+            ){
+
+                delete selectedAnswers[key];
+
+            }
+
+
+            document
+                .querySelectorAll(
+                    ".quiz-option"
+                )
+                .forEach(function(option){
+
+                    option.classList.remove(
+                        "selected",
+                        "correct",
+                        "wrong"
+                    );
+
+                });
+
+
+            document
+                .querySelectorAll(
+                    ".quiz-feedback"
+                )
+                .forEach(function(feedback){
+
+                    feedback.textContent =
+                        "";
+
+                });
+
+
+            const result =
+                document.getElementById(
+                    "quizResult"
+                );
+
+
+            result.style.display =
+                "none";
+
+            result.innerHTML =
+                "";
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
